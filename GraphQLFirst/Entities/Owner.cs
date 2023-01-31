@@ -9,6 +9,7 @@ public class Owner
     [Required(ErrorMessage = "Name is required")]
     public string Name { get; set; }
     public string Address { get; set; }
-
+    
+    [UseSorting]
     public ICollection<Account> Accounts { get; set; }
 }
