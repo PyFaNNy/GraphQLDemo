@@ -22,7 +22,7 @@ public class OwnerContextConfiguration : IEntityTypeConfiguration<Owner>
                 },
                 new Owner
                 {
-                    Id = GuidsData.Guids[2],
+                    Id = GuidsData.Guids[1],
                     Name = "Jane Doe",
                     Address = "Jane Doe's address"
                 }
