@@ -1,5 +1,6 @@
 ﻿using GraphQLFirst.Contracts;
 using GraphQLFirst.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace GraphQLFirst.Repository;
 
@@ -12,5 +13,5 @@ public class OwnerRepository : IOwnerRepository
         _context = context;
     }
     
-    public IEnumerable<Owner> GetAll() => _context.Owners.ToList();
+    public IEnumerable<Owner> GetAll() => _context.Owners.Include(x =>x.Accounts).ToList();
 }
