@@ -1,4 +1,5 @@
-﻿using GraphQL.Types;
+﻿using GraphQL.DataLoader;
+using GraphQL.Types;
 using GraphQLFirst.Contracts;
 using GraphQLFirst.Entities;
 
@@ -6,7 +7,7 @@ namespace GraphQLFirst.GraphQL.GraphQLTypes;
 
 public class OwnerType : ObjectGraphType<Owner>
 {
-    public OwnerType(IAccountRepository repository)
+    public OwnerType(IAccountRepository repository, IDataLoaderContextAccessor dataLoader)
     {
         Name = nameof(Owner);
         
@@ -15,7 +16,10 @@ public class OwnerType : ObjectGraphType<Owner>
         Field(x => x.Address).Description("Address property from the owner object.");
         Field<ListGraphType<AccountType>>(
             "accounts",
-            resolve: context => repository.GetAllAccountsPerOwner(context.Source.Id)
-        );
+            resolve: context =>
+            {
+                var loader = dataLoader.Context.GetOrAddCollectionBatchLoader<Guid, Account>("GetAccountsByOwnerIds", repository.GetAccountsByOwnerIds);
+                return loader.LoadAsync(context.Source.Id);
+            });
     }   
 }
