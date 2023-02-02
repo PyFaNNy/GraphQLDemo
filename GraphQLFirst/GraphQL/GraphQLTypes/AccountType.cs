@@ -1,5 +1,6 @@
 ﻿using GraphQL.Types;
 using GraphQLFirst.Entities;
+using GraphQLFirst.GraphQL.GraphQLEnums;
 
 namespace GraphQLFirst.GraphQL.GraphQLTypes;
 
@@ -9,6 +10,7 @@ public class AccountType : ObjectGraphType<Account>
         {
             Field(x => x.Id, type: typeof(IdGraphType)).Description("Id property from the account object.");
             Field(x => x.Description).Description("Description property from the account object.");
-            Field(x => x.Type).Description("Type property from the owner object.");
+            Field(x => x.OwnerId, type: typeof(IdGraphType)).Description("OwnerId property from the account object.");
+            Field<AccountTypeEnumType>("Type", "Enumeration for the account type object.");
         }
 }
