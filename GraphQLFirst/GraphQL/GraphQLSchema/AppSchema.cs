@@ -9,5 +9,6 @@ public class AppSchema : Schema
         :base(provider)
     {
         Query = provider.GetRequiredService<AppQuery>();
+        Mutation = provider.GetRequiredService<AppMutation>();
     }
 }
